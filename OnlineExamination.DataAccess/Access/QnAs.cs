@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineExamination.DataAccess
+namespace OnlineExamination.DataAccess.Access
 {
     public class QnAs
     {
