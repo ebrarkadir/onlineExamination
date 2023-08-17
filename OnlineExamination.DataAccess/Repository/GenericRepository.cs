@@ -22,55 +22,108 @@ namespace OnlineExamination.DataAccess.Repository
 
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+            dbset.Add(entity);
         }
 
-        public Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            dbset.Add(entity);
+            return entity;
         }
 
         public void Delete(T entityToDelete)
         {
-            throw new NotImplementedException();
+            if (_context.Entry(entityToDelete).State == EntityState.Detached)
+            {
+                dbset.Attach(entityToDelete);
+            }
+            dbset.Remove(entityToDelete);
         }
 
-        public Task<T> DeleteAsync(T entityToDelete)
+        public async Task<T> DeleteAsync(T entityToDelete)
         {
-            throw new NotImplementedException();
+            if (_context.Entry(entityToDelete).State==EntityState.Detached)
+            {
+                dbset.Attach(entityToDelete);
+            }
+            dbset.Remove(entityToDelete);
+            return entityToDelete;
         }
 
         public void DeleteByID(object id)
         {
-            throw new NotImplementedException();
+            T entityToDelete = dbset.Find(id);
+            Delete(entityToDelete);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        private bool disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed) 
+            { 
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            this.disposed = true;
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        public IEnumerable<T> GetAll(
+            Expression<Func<T, bool>> filter = null, 
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string includeProperties = "")
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = dbset;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            foreach(var includeProperty in includeProperties.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
 
         public T GetByID(object id)
         {
-            throw new NotImplementedException();
+            return dbset.Find(id);
         }
 
-        public Task<T> GetByIdAsync(object id)
+        public async Task<T> GetByIdAsync(object id)
         {
-            throw new NotImplementedException();
+            return await dbset.FindAsync(id);
         }
 
         public void Update(T entityToUpdate)
         {
-            throw new NotImplementedException();
+            dbset.Attach(entityToUpdate);
+            _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public Task<T> UpdateAsync(T entityToUpdate)
+        public async Task<T> UpdateAsync(T entityToUpdate)
+        {
+            dbset.Attach(entityToUpdate);
+            _context.Entry(entityToUpdate).State = EntityState.Modified;
+            return entityToUpdate;
+        }
+
+        public IEnumerable<T> GetAll(Expression<Func<T>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string includeProperties = "")
         {
             throw new NotImplementedException();
         }
