@@ -1,4 +1,4 @@
-﻿namespace OnlineExamination.DataAccess.Access
+﻿namespace OnlineExamination.DataAccess
 {
     public class Users
     {
