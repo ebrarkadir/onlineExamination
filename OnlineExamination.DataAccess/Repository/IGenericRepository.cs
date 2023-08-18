@@ -24,5 +24,6 @@ namespace OnlineExamination.DataAccess.Repository
         void Update(T entityToUpdate);
         Task<T> UpdateAsync(T entityToUpdate);
         Task<T> DeleteAsync(T entityToDelete);
+        
     }
 }

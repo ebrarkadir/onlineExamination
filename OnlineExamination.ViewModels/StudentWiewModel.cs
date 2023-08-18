@@ -44,7 +44,7 @@ namespace OnlineExamination.ViewModels
             GroupsId = model.GroupsId;
         }
 
-        public Students ConvertToModel(StudentWiewModel vm)
+        public Students ConvertViewModel(StudentWiewModel vm)
         {
             return new Students 
             {

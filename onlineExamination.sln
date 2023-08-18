@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExamination.DataAccess", "OnlineExamination.DataAccess\OnlineExamination.DataAccess.csproj", "{27112632-5F8C-4CC8-A432-76B61EE89526}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamination.ViewModels", "OnlineExamination.ViewModels\OnlineExamination.ViewModels.csproj", "{2EC72ACB-7019-49C2-8621-374245415A99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExamination.ViewModels", "OnlineExamination.ViewModels\OnlineExamination.ViewModels.csproj", "{2EC72ACB-7019-49C2-8621-374245415A99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamination.BLL", "OnlineExamination.BLL\OnlineExamination.BLL.csproj", "{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2EC72ACB-7019-49C2-8621-374245415A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EC72ACB-7019-49C2-8621-374245415A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EC72ACB-7019-49C2-8621-374245415A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
