@@ -15,7 +15,7 @@ namespace OnlineExamination.DataAccess
         public string Contact { get; set; }
         public string CVFileName { get; set; }
         public string PictureFileName { get; set; }
-        public int GroupsId { get; set; }
+        public int? GroupsId { get; set; }
         public Groups Groups { get; set; }
         public ICollection<ExamResaults> ExamResaults { get; set; } = new HashSet<ExamResaults>();
 
