@@ -14,5 +14,6 @@ namespace OnlineExamination.ViewModels
         public int CorrectAnswer { get; set; }
         public int WrongAnswer { get; set; }
 
+
     }
 }
