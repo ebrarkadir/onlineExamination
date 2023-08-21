@@ -10,10 +10,10 @@ namespace OnlineExamination.BLL.Services
         IUnitOfWork _unitOfWork;
         ILogger<StudentService> _ilogger;
 
-        public StudentService(UnitOfWork unitOfWork, ILogger<StudentService> iLogger)
+        public StudentService(IUnitOfWork unitOfWork, ILogger<StudentService> ilogger)
         {
             _unitOfWork = unitOfWork;
-            _ilogger = iLogger;
+            _ilogger = ilogger;
         }
 
         public async Task<StudentWiewModel> AddAsync(StudentWiewModel vm)
@@ -35,20 +35,21 @@ namespace OnlineExamination.BLL.Services
             var model = new StudentWiewModel();
             try
             {
-                int ExcludeRecords = (pageSize * pageSize) - pageSize;
-                List<StudentWiewModel> detailList = new List<StudentWiewModel>();
+                int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+                List<StudentWiewModel> detailList =  new List<StudentWiewModel>();
                 var modelList = _unitOfWork.GenericRepository<Students>().GetAll()
                     .Skip(ExcludeRecords).Take(pageSize).ToList();
                 var totalCount = _unitOfWork.GenericRepository<Students>().GetAll().ToList();
                 detailList = GroupListInfo(modelList);
-                if (detailList!=null)
+                if (detailList!= null)
                 {
                     model.StudentList = detailList;
                     model.TotalCount = totalCount.Count();
                 }
             }
-            catch(Exception ex)
-            { 
+            catch (Exception ex)
+            {
+
                 _ilogger.LogError(ex.Message);
             }
             var result = new PagedResult<StudentWiewModel>
@@ -68,17 +69,7 @@ namespace OnlineExamination.BLL.Services
 
         public IEnumerable<Students>? GetAllStudents()
         {
-            try
-            {
-                var student = _unitOfWork.GenericRepository<Students>().GetByID(studentId);
-                return student != null ? new StudentWiewModel(student):null;
-            }
-            catch (Exception ex)
-            {
-
-                _ilogger.LogError(ex.Message);
-            }
-            return null;
+            throw new NotImplementedException();
         }
 
         public IEnumerable<ResultViewModel> GetExamResults(int studentId)
@@ -88,7 +79,17 @@ namespace OnlineExamination.BLL.Services
 
         public StudentWiewModel GetStudentDetails(int studentId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var student = _unitOfWork.GenericRepository<Students>().GetByID(studentId);
+                return student != null ? new StudentWiewModel(student) : null;
+            }
+            catch (Exception ex)
+            {
+
+                _ilogger.LogError(ex.Message);
+            }
+            return null;
         }
 
         public bool SetExamResult(AttendExamViewModel vm)
