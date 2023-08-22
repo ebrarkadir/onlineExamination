@@ -1,4 +1,5 @@
-﻿using OnlineExamination.DataAccess.UnitOfWork;
+﻿using OnlineExamination.DataAccess;
+using OnlineExamination.DataAccess.UnitOfWork;
 using OnlineExamination.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,29 @@ namespace OnlineExamination.BLL.Services
 
         public LoginViewModel Login(LoginViewModel vm)
         {
-            throw new NotImplementedException();
+            if (vm.Role == (int)EnumRoles.Admin || vm.Role ==(int)EnumRoles.Teacher)
+            {
+                var user = _unitWork.GenericRepository<Users>().GetAll()
+                    .FirstOrDefault(a => a.UserName == vm.UserName.Trim()
+                    && a.Password == vm.Password.Trim() && a.Role == vm.Role);
+                if (user != null)
+                {
+                    vm.Id = user.Id;
+                    return vm;
+                }
+            }
+            else
+            {
+                var student = _unitWork.GenericRepository<Students>().GetAll()
+                    .FirstOrDefault(a=>a.UserName == vm.UserName.Trim()
+                    && a.Password == vm.Password.Trim());
+                if (student != null)
+                {
+                    vm.Id = student.Id;
+                }
+                return vm;
+            }
+            return null;
         }
     }
 }

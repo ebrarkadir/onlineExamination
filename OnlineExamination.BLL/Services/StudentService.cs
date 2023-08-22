@@ -69,7 +69,16 @@ namespace OnlineExamination.BLL.Services
 
         public IEnumerable<Students>? GetAllStudents()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var students = _unitOfWork.GenericRepository<Students>().GetAll();
+                return students;
+            }
+            catch (Exception ex)
+            {
+                _ilogger.LogError(ex.Message);
+            }
+            return Enumerable.Empty<Students>();
         }
 
         public IEnumerable<ResultViewModel> GetExamResults(int studentId)
@@ -175,9 +184,26 @@ namespace OnlineExamination.BLL.Services
             return false;
         }
 
-        public Task<StudentWiewModel> UpdateAsync(StudentWiewModel vm)
+        public async Task<StudentWiewModel> UpdateAsync(StudentWiewModel vm)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Students obj = _unitOfWork.GenericRepository<Students>().GetByID(vm.Id);
+                obj.Name = vm.Name;
+                obj.UserName = vm.UserName;
+                obj.PictureFileName = vm.PictureFileName != null ?
+                    vm.PictureFileName : obj.PictureFileName;
+                obj.CVFileName = vm.CVFileName != null ?
+                    vm.CVFileName : obj.CVFileName;
+                await _unitOfWork.GenericRepository<Students>().UpdateAsync(obj);
+                _unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+
+                _ilogger.LogError(ex.Message);
+            }
+            return vm;
         }
     }
 }
