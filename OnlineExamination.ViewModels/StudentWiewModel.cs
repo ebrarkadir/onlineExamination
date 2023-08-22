@@ -11,6 +11,11 @@ namespace OnlineExamination.ViewModels
 {
     public class StudentWiewModel
     {
+        public StudentWiewModel()
+        {
+            
+        }
+
         public int Id { get; set; }
         [Required]
         [Display(Name = "Student Name")]
@@ -43,6 +48,8 @@ namespace OnlineExamination.ViewModels
             PictureFileName = model.PictureFileName ?? "";
             GroupsId = model.GroupsId;
         }
+
+ 
 
         public Students ConvertViewModel(StudentWiewModel vm)
         {

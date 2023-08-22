@@ -13,7 +13,6 @@ namespace OnlineExamination.ViewModels
         public int TotalQuestion { get; set; }
         public int CorrectAnswer { get; set; }
         public int WrongAnswer { get; set; }
-
-
+        public int StudentId { get; set; } //????????
     }
 }

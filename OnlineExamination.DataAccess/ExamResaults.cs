@@ -16,5 +16,6 @@ namespace OnlineExamination.DataAccess
         public int QnAsId { get; set; }
         public QnAs QnAs { get; set; }
         public int Answer { get; set; }
+        public string Title { get; set; } //????????
     }
 }
