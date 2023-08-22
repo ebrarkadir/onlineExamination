@@ -1,4 +1,5 @@
-﻿using OnlineExamination.DataAccess;
+﻿using Microsoft.Extensions.Logging;
+using OnlineExamination.DataAccess;
 using OnlineExamination.DataAccess.UnitOfWork;
 using OnlineExamination.ViewModels;
 using System;
@@ -12,16 +13,51 @@ namespace OnlineExamination.BLL.Services
     public class AccountService : IAccountService
     {
         IUnitOfWork _unitWork;
-        public AccountService()
+        ILogger<StudentService> _iLogger;
+        public AccountService(IUnitOfWork unitWork, ILogger<StudentService> iLogger)
         {
-            
+            _unitWork = unitWork;
+            _iLogger = iLogger;
         }
+
         public bool AddTeacher(UserViewModel vm)
         {
             throw new NotImplementedException();
         }
 
         public PagedResult<UserViewModel> GetAllTeachers(int pageNumber, int pageSize)
+        {
+            var model = new UserViewModel();
+            try
+            {
+                int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+                List<UserViewModel> detailList = new List<UserViewModel>();
+                var modelList = _unitWork.GenericRepository<Users>().GetAll()
+                    .Where(x=>x.Role == (int)EnumRoles.Teacher).Skip(ExcludeRecords)
+                    .Take(pageSize).ToList();
+                detailList = ListInfo(modelList);
+                if (detailList != null)
+                {
+                    model.UserList = detailList;
+                    model.TotalCount = _unitWork.GenericRepository<Users>().GetAll()
+                        .Count(x=>x.Role==(int)EnumRoles.Teacher);
+                }
+            }
+            catch (Exception ex)
+            {
+                _iLogger.LogError(ex.Message);
+            }
+            var results = new PagedResult<UserViewModel>
+            {
+                Data = model.UserList,
+                TotalItems = model.TotalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+            return results;
+        }
+
+        private List<UserViewModel> ListInfo(List<Users> modelList)
         {
             throw new NotImplementedException();
         }
