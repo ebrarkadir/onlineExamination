@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExamination.DataAcces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExamination.ViewModels", "OnlineExamination.ViewModels\OnlineExamination.ViewModels.csproj", "{2EC72ACB-7019-49C2-8621-374245415A99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamination.BLL", "OnlineExamination.BLL\OnlineExamination.BLL.csproj", "{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineExamination.BLL", "OnlineExamination.BLL\OnlineExamination.BLL.csproj", "{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamination.Web", "WebApplication2\OnlineExamination.Web.csproj", "{F8DED926-E02E-41E5-BFE9-7305C836FD2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5039299D-F213-4EDD-8FA7-C02AB1F8E27E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8DED926-E02E-41E5-BFE9-7305C836FD2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8DED926-E02E-41E5-BFE9-7305C836FD2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8DED926-E02E-41E5-BFE9-7305C836FD2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8DED926-E02E-41E5-BFE9-7305C836FD2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
