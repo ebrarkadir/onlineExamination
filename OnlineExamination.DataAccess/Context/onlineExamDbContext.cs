@@ -9,11 +9,18 @@ namespace OnlineExamination.DataAccess.Context
 {
     public class onlineExamDbContext : DbContext
     {
-        public onlineExamDbContext(DbContextOptions<onlineExamDbContext>options):base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+            if (!optionsBuilder.IsConfigured)
+            {
+                var connectionString = "Server = localhost; Database = OnlineExaminationDb; Trusted_Connection = True; TrustServerCertificate = True";
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+
+            optionsBuilder.EnableSensitiveDataLogging();
         }
-        public DbSet<ExamResaults> ExamResaults { get; set; }
+
+        public DbSet<ExamResults> ExamResaults { get; set; }
         public DbSet<Exams> Exams { get; set; }
         public DbSet<Groups> Groups { get; set; }
         public DbSet<QnAs> QnAs { get; set; }
@@ -63,13 +70,13 @@ namespace OnlineExamination.DataAccess.Context
                 entity.HasOne(d => d.Groups).WithMany(p => p.Exams).HasForeignKey(d => d.GroupsId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
             });
-            modelBuilder.Entity<ExamResaults>(entity =>
+            modelBuilder.Entity<ExamResults>(entity =>
             {
 
-                entity.HasOne(d => d.Exams).WithMany(p => p.ExamResaults).HasForeignKey(d => d.Exams);
+                entity.HasOne(d => d.Exams).WithMany(p => p.ExamResults).HasForeignKey(d => d.Exams);
                 entity.HasOne(d => d.QnAs).WithMany(p => p.ExamResults).HasForeignKey(d => d.QnAsId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-                entity.HasOne(d => d.Students).WithMany(p => p.ExamResaults).HasForeignKey(d => d.StudentsId)
+                entity.HasOne(d => d.Students).WithMany(p => p.ExamResults).HasForeignKey(d => d.StudentsId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
             });
             base.OnModelCreating(modelBuilder);

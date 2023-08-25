@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using OnlineExamination.BLL.Services.Abstract;
 using OnlineExamination.DataAccess;
 using OnlineExamination.DataAccess.UnitOfWork;
 using OnlineExamination.ViewModels;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace OnlineExamination.BLL.Services
+namespace OnlineExamination.BLL.Services.Concrete
 {
     public class ExamService : IExamService
     {
@@ -42,7 +43,7 @@ namespace OnlineExamination.BLL.Services
             var model = new ExamViewModel();
             try
             {
-                int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+                int ExcludeRecords = pageSize * pageNumber - pageSize;
                 List<ExamViewModel> detailList = new List<ExamViewModel>();
                 var modelList = _unitOfWork.GenericRepository<Exams>().GetAll().Skip(ExcludeRecords)
                     .Take(pageSize).ToList();

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineExamination.BLL.Services
+namespace OnlineExamination.BLL.Services.Abstract
 {
     public interface IExamService
     {

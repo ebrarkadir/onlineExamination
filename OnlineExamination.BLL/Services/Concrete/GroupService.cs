@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using OnlineExamination.BLL.Services.Abstract;
 using OnlineExamination.DataAccess;
 using OnlineExamination.DataAccess.UnitOfWork;
 using OnlineExamination.ViewModels;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineExamination.BLL.Services
+namespace OnlineExamination.BLL.Services.Concrete
 {
     public class GroupService : IGroupService
     {
@@ -41,7 +42,7 @@ namespace OnlineExamination.BLL.Services
             var model = new GroupViewModel();
             try
             {
-                int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+                int ExcludeRecords = pageSize * pageNumber - pageSize;
                 List<GroupViewModel> detailList = new List<GroupViewModel>();
                 var modelList = _unitofwork.GenericRepository<Groups>().GetAll().Skip(ExcludeRecords)
                     .Take(pageSize).ToList();
@@ -70,7 +71,7 @@ namespace OnlineExamination.BLL.Services
 
         private List<GroupViewModel> GroupListInfo(List<Groups> modelList)
         {
-            return modelList.Select(o=> new GroupViewModel(o)).ToList();
+            return modelList.Select(o => new GroupViewModel(o)).ToList();
         }
 
         public IEnumerable<Groups> GetAllGroups()
@@ -97,7 +98,7 @@ namespace OnlineExamination.BLL.Services
             }
             catch (Exception ex)
             {
-                _ilogger.LogError(ex.Message);      
+                _ilogger.LogError(ex.Message);
             }
             return null;
         }

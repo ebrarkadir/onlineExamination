@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using OnlineExamination.BLL.Services.Abstract;
 using OnlineExamination.DataAccess;
 using OnlineExamination.DataAccess.UnitOfWork;
 using OnlineExamination.ViewModels;
 
-namespace OnlineExamination.BLL.Services
+namespace OnlineExamination.BLL.Services.Concrete
 {
     public class StudentService : IStudentService
     {
@@ -35,13 +36,13 @@ namespace OnlineExamination.BLL.Services
             var model = new StudentWiewModel();
             try
             {
-                int ExcludeRecords = (pageSize * pageNumber) - pageSize;
-                List<StudentWiewModel> detailList =  new List<StudentWiewModel>();
+                int ExcludeRecords = pageSize * pageNumber - pageSize;
+                List<StudentWiewModel> detailList = new List<StudentWiewModel>();
                 var modelList = _unitOfWork.GenericRepository<Students>().GetAll()
                     .Skip(ExcludeRecords).Take(pageSize).ToList();
                 var totalCount = _unitOfWork.GenericRepository<Students>().GetAll().ToList();
                 detailList = GroupListInfo(modelList);
-                if (detailList!= null)
+                if (detailList != null)
                 {
                     model.StudentList = detailList;
                     model.TotalCount = totalCount.Count();
@@ -85,10 +86,10 @@ namespace OnlineExamination.BLL.Services
         {
             try
             {
-                var examResults = _unitOfWork.GenericRepository<ExamResaults>().GetAll()
+                var examResults = _unitOfWork.GenericRepository<ExamResults>().GetAll()
                     .Where(a => a.StudentsId == studentId);
                 var students = _unitOfWork.GenericRepository<Students>().GetAll();
-                var exams = _unitOfWork.GenericRepository<ExamResaults>().GetAll();
+                var exams = _unitOfWork.GenericRepository<ExamResults>().GetAll();
                 var qnas = _unitOfWork.GenericRepository<QnAs>().GetAll();
 
                 var requiredData = examResults.Join(students, er => er.StudentsId, s => s.Id,
@@ -98,18 +99,19 @@ namespace OnlineExamination.BLL.Services
                     {
                         StudentId = studentId,
                         ExamName = exj.ex.Title,
-                        TotalQuestion = examResults.Count(a=>a.StudentsId==studentId 
-                        && a.ExamsId==exj.ex.Id), CorrectAnswer = examResults.Count(a=>a.StudentsId==studentId
-                        && a.ExamsId==exj.ex.Id && a.Answer==q.Answer),
-                        WrongAnswer = examResults.Count(a=>a.StudentsId==studentId
-                        && a.ExamsId==exj.ex.Id && a.Answer!=q.Answer)
+                        TotalQuestion = examResults.Count(a => a.StudentsId == studentId
+                        && a.ExamsId == exj.ex.Id),
+                        CorrectAnswer = examResults.Count(a => a.StudentsId == studentId
+                        && a.ExamsId == exj.ex.Id && a.Answer == q.Answer),
+                        WrongAnswer = examResults.Count(a => a.StudentsId == studentId
+                        && a.ExamsId == exj.ex.Id && a.Answer != q.Answer)
                     });
                 return requiredData;
             }
             catch (Exception ex)
             {
 
-                _ilogger.LogError(ex.Message); 
+                _ilogger.LogError(ex.Message);
             }
             return Enumerable.Empty<ResultViewModel>();
         }
@@ -135,12 +137,12 @@ namespace OnlineExamination.BLL.Services
             {
                 foreach (var item in vm.QnAs)
                 {
-                    ExamResaults examResaults = new ExamResaults();
+                    ExamResults examResaults = new ExamResults();
                     examResaults.StudentsId = vm.StudentId;
                     examResaults.QnAsId = item.Id;
                     examResaults.ExamsId = item.ExamsId;
                     examResaults.Answer = item.SelectedAnswer;
-                    _unitOfWork.GenericRepository<ExamResaults>().AddAsync(examResaults);
+                    _unitOfWork.GenericRepository<ExamResults>().AddAsync(examResaults);
                 }
                 _unitOfWork.Save();
                 return true;
@@ -148,7 +150,7 @@ namespace OnlineExamination.BLL.Services
             catch (Exception ex)
             {
                 _ilogger.LogError(ex.Message);
-                
+
             }
             return false;
         }
@@ -167,7 +169,7 @@ namespace OnlineExamination.BLL.Services
                     }
                     else
                     {
-                        if (student.GroupsId==vm.Id)
+                        if (student.GroupsId == vm.Id)
                         {
                             student.GroupsId = null;
                         }

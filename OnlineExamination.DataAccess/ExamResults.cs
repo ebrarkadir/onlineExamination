@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineExamination.DataAccess
 {
-    public class ExamResaults
+    public class ExamResults
     {
         public int Id { get; set; }
         public int StudentsId { get; set; }

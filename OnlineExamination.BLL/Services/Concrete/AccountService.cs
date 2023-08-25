@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using OnlineExamination.BLL.Services.Abstract;
 using OnlineExamination.DataAccess;
 using OnlineExamination.DataAccess.UnitOfWork;
 using OnlineExamination.ViewModels;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineExamination.BLL.Services
+namespace OnlineExamination.BLL.Services.Concrete
 {
     public class AccountService : IAccountService
     {
@@ -48,17 +49,17 @@ namespace OnlineExamination.BLL.Services
             var model = new UserViewModel();
             try
             {
-                int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+                int ExcludeRecords = pageSize * pageNumber - pageSize;
                 List<UserViewModel> detailList = new List<UserViewModel>();
                 var modelList = _unitWork.GenericRepository<Users>().GetAll()
-                    .Where(x=>x.Role == (int)EnumRoles.Teacher).Skip(ExcludeRecords)
+                    .Where(x => x.Role == (int)EnumRoles.Teacher).Skip(ExcludeRecords)
                     .Take(pageSize).ToList();
                 detailList = ListInfo(modelList);
                 if (detailList != null)
                 {
                     model.UserList = detailList;
                     model.TotalCount = _unitWork.GenericRepository<Users>().GetAll()
-                        .Count(x=>x.Role==(int)EnumRoles.Teacher);
+                        .Count(x => x.Role == (int)EnumRoles.Teacher);
                 }
             }
             catch (Exception ex)
@@ -82,7 +83,7 @@ namespace OnlineExamination.BLL.Services
 
         public LoginViewModel Login(LoginViewModel vm)
         {
-            if (vm.Role == (int)EnumRoles.Admin || vm.Role ==(int)EnumRoles.Teacher)
+            if (vm.Role == (int)EnumRoles.Admin || vm.Role == (int)EnumRoles.Teacher)
             {
                 var user = _unitWork.GenericRepository<Users>().GetAll()
                     .FirstOrDefault(a => a.UserName == vm.UserName.Trim()
@@ -96,7 +97,7 @@ namespace OnlineExamination.BLL.Services
             else
             {
                 var student = _unitWork.GenericRepository<Students>().GetAll()
-                    .FirstOrDefault(a=>a.UserName == vm.UserName.Trim()
+                    .FirstOrDefault(a => a.UserName == vm.UserName.Trim()
                     && a.Password == vm.Password.Trim());
                 if (student != null)
                 {

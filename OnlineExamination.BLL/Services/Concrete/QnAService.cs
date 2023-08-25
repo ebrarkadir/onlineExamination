@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using OnlineExamination.BLL.Services.Abstract;
 using OnlineExamination.DataAccess;
 using OnlineExamination.DataAccess.UnitOfWork;
 using OnlineExamination.ViewModels;
@@ -8,8 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineExamination.BLL.Services
+namespace OnlineExamination.BLL.Services.Concrete
 {
+
     public class QnAService : IQnAService
     {
         IUnitOfWork _unitOfWork;
@@ -42,7 +44,7 @@ namespace OnlineExamination.BLL.Services
             var model = new QnAsViewModel();
             try
             {
-                int ExcludeRecords = (pageSize * pageNumber) - pageSize;
+                int ExcludeRecords = pageSize * pageNumber - pageSize;
                 List<QnAsViewModel> detailList = new List<QnAsViewModel>();
                 var modelList = _unitOfWork.GenericRepository<QnAs>().GetAll().Skip(ExcludeRecords)
                     .Take(pageSize).ToList();
@@ -79,9 +81,9 @@ namespace OnlineExamination.BLL.Services
             try
             {
                 var qnaList = _unitOfWork.GenericRepository<QnAs>().GetAll()
-                    .Where(x=>x.ExamsId==examId);
+                    .Where(x => x.ExamsId == examId);
                 return QnAsListInfo(qnaList.ToList());
-                
+
             }
             catch (Exception ex)
             {
@@ -95,7 +97,7 @@ namespace OnlineExamination.BLL.Services
         {
             try
             {
-                var qnaRecord = _unitOfWork.GenericRepository<ExamResaults>().GetAll()
+                var qnaRecord = _unitOfWork.GenericRepository<ExamResults>().GetAll()
                     .FirstOrDefault(x => x.ExamsId == examId && x.StudentsId == studentId);
                 return qnaRecord == null ? false : true;
             }

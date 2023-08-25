@@ -12,7 +12,7 @@ namespace OnlineExamination.ViewModels
     {
         public ExamViewModel()
         {
-            
+               
         }
         public int Id { get; set; }
         [Required]

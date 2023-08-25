@@ -15,7 +15,7 @@ namespace OnlineExamination.DataAccess
         public int Time { get; set; }
         public int GroupsId { get; set; }
         public Groups Groups { get; set; }
-        public ICollection<ExamResaults> ExamResaults { get; set; } = new List<ExamResaults>();
+        public ICollection<ExamResults> ExamResults { get; set; } = new List<ExamResults>();
         public ICollection<QnAs> QnAs { get; set; }
     }
 }

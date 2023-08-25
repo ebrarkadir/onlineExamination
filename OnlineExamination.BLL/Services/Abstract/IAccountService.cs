@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineExamination.BLL.Services
+namespace OnlineExamination.BLL.Services.Abstract
 {
     public interface IAccountService
     {
         LoginViewModel Login(LoginViewModel vm);
         bool AddTeacher(UserViewModel vm);
-        PagedResult<UserViewModel>GetAllTeachers(int pageNumber, int pageSize);
+        PagedResult<UserViewModel> GetAllTeachers(int pageNumber, int pageSize);
     }
 }
