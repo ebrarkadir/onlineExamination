@@ -17,6 +17,10 @@ namespace OnlineExamination.Web.Controllers
         {
             return View(_accountService.GetAllTeachers(pageNumber,pageSize));
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Create(UserViewModel userViewModel) 
         {

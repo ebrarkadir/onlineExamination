@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="cloudscribe.Web.Pagination" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\OnlineExamination.BLL\OnlineExamination.BLL.csproj" />
     <ProjectReference Include="..\OnlineExamination.DataAccess\OnlineExamination.DataAccess.csproj" />
   </ItemGroup>

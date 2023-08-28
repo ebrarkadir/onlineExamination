@@ -73,7 +73,7 @@ namespace OnlineExamination.DataAccess.Context
             modelBuilder.Entity<ExamResults>(entity =>
             {
 
-                entity.HasOne(d => d.Exams).WithMany(p => p.ExamResults).HasForeignKey(d => d.Exams);
+                entity.HasOne(d => d.Exams).WithMany(p => p.ExamResults).HasForeignKey(d => d.ExamsId);
                 entity.HasOne(d => d.QnAs).WithMany(p => p.ExamResults).HasForeignKey(d => d.QnAsId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
                 entity.HasOne(d => d.Students).WithMany(p => p.ExamResults).HasForeignKey(d => d.StudentsId)
