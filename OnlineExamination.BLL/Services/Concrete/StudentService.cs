@@ -16,7 +16,6 @@ namespace OnlineExamination.BLL.Services.Concrete
             _unitOfWork = unitOfWork;
             _ilogger = ilogger;
         }
-
         public async Task<StudentWiewModel> AddAsync(StudentWiewModel vm)
         {
             try

@@ -9,6 +9,10 @@ namespace OnlineExamination.DataAccess.Context
 {
     public class onlineExamDbContext : DbContext
     {
+        public onlineExamDbContext(DbContextOptions<onlineExamDbContext> options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
