@@ -95,6 +95,7 @@ namespace OnlineExamination.Web.Controllers
         {
             LoginViewModel sessionObj = HttpContext.Session.Get<LoginViewModel>("loginvm");
             if (sessionObj != null)
+
             {
                 var model = _studentService.GetStudentDetails(Convert.ToInt32(sessionObj.Id));
                 if (model.PictureFileName != null)

@@ -30,6 +30,7 @@ namespace OnlineExamination.BLL.Services.Concrete
             return vm;
         }
 
+
         public PagedResult<StudentWiewModel> GetAll(int pageNumber, int pageSize)
         {
             var model = new StudentWiewModel();

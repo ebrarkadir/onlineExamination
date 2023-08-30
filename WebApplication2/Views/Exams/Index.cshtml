@@ -1,36 +1,32 @@
-﻿@model PagedResult<OnlineExamination.ViewModels.StudentWiewModel>
+﻿@model PagedResult<OnlineExamination.ViewModels.ExamViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Student</h1>
-
 <div>
     <br />
-    <a asp-action="Create" asp-controller="Students" class="btn btn-primary">Create</a>
+    <a asp-action="Create" asp-controller="Exams" class="btn btn-primary">Create</a>
     <div>
-        <table id="studentGrid"
+        <table id="examGrid"
                class="table table-striped table-bordered dt-responsive nowrap"
                width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Contact</th>
-                    <th></th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>Time</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Data)
                 {
                     <tr>
-                        <td>@item.Name</td>
-                        <td>@item.UserName</td>
-                        <td>@item.Contact</td>
-                        <td><a asp-action="Result" asp-asp-controller="Students" 
-                            asp-asp-all-route-data="@(new Dictionary<string, string>{ {"studentId", item.Id.ToString()}})" 
-                            class="btn btn-primary">Results</a></td>
+                        <td>@item.Title</td>
+                        <td>@item.Description</td>
+                        <td>@item.StartDate</td>
+                        <td>@item.Time hours</td>
                     </tr>
                 }
             </tbody>
@@ -39,7 +35,7 @@
                   cs-paging-pagenumber=(int)Model.PageNumber
                   cs-paging-totalitems=(int)Model.TotalItems
                   cs-pagenumber-param="pagenumber"
-                  asp-controller="Users"
+                  asp-controller="Groups"
                   asp-action="Index"
                   cs-pager-li-current-class="page-item active"
                   cs-pager-li-other-class="page-item"
@@ -48,15 +44,29 @@
                   cs-pager-link-other-class="page-link">
         </cs-pager>
     </div>
+    <a id="printPDF" class="btn btn-primary" ></a>
 </div>
 
 @section scripts {
     <script>
         $(document).ready(function () {
-            $('#studentGrid').DataTable({
+            $('#examGrid').DataTable({
                 "paging": false,
                 "filter": true
             });
+        });
+        $('#printPDF').click(function () {
+            var element = document.getElementById('examGrid');
+            var mode = 'avoid-all';
+            var pagebreak = (mode == 'specify') ?
+                { mode: '', before: '.before', after: '.after', avoid: 'avoid' } :
+                { mode: mode };
+
+            html2pdf().from(element).set({
+                margin: [30, 10, 5, 10],
+                pagebreak: { avoid: 'tr' },
+                jsPDF: { orientation: 'landscape', unit: 'pt', format: 'letter', compressPDF: true }
+            }).save()
         });
     </script>
 }
