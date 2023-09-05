@@ -16,7 +16,7 @@ namespace OnlineExamination.Web.Controllers
             _groupService = groupService;
             _studentService = studentService;
         }
-
+        
         public IActionResult Index(int pageNumber = 1, int pageSize = 10)
         {
             return View(_groupService.GetAllGroups(pageNumber, pageSize));
