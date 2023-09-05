@@ -1,7 +1,13 @@
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
 using Microsoft.EntityFrameworkCore;
+using OnlineExamination.BLL.DependencyResolvers.Autofac;
 using OnlineExamination.DataAccess.Context;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacBusinessModule()));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
