@@ -1,6 +1,6 @@
 # 🧪 Online Examination System (.NET)
 
-Bu proje, ASP.NET MVC teknolojisi kullanılarak geliştirilmiş basit ama genişletilebilir bir **çevrimiçi sınav sistemi**dir. Yönetici ve öğrenci rolleriyle kullanıcıların sınav oluşturmasına, sınavlara katılmasına ve sonuçları görüntülemesine olanak tanır. Proje, eğitim ve pratik amaçlı bir **boilerplate** olarak kullanılabilir.
+Bu proje, ASP.NET MVC teknolojisi kullanılarak geliştirilmiş basit ama genişletilebilir bir **çevrimiçi sınav sistemi**dir. Yönetici ve öğrenci rolleriyle kullanıcıların sınav oluşturmasına, sınavlara katılmasına ve sonuçları görüntülemesine olanak tanır. Proje, eğitim ve pratikamaçlıdır.
 
 ---
 
